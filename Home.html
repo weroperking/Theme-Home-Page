@@ -1,0 +1,260 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dark Themed Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="./tailwindcsscdn.js" style="display: none;"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+        body {
+            font-family: 'Josefin Sans';
+        }
+
+        /* Hide scrollbar for WebKit browsers */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide {
+            display: none !important;
+        }
+        .shortcut-item {
+            position: relative;
+            padding: 10px;
+            border: 1px solid #4a5568;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .settings-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4a5568;
+            color: #e2e8f0;
+            border: none;
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .settings-button:hover {
+            background-color: #2d3748;
+        }
+
+        .loader {
+            position: relative;
+            display: inline-block;
+            height: 240px;
+            width: 240px;
+            border-radius: 50%;
+            background: conic-gradient(#01b6be4d 0%, transparent 65%);
+            animation: radarRotate 2s linear infinite;
+        }
+
+        #todoList li {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            padding: 10px;
+            border: 1px solid #4a5568;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #todoList li .task-text {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        #todoList li .task-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        #todoList li .task-buttons button {
+            background-color: #4a5568;
+            color: #e2e8f0;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #todoList li .task-buttons button:hover {
+            background-color: #2d3748;
+        }
+
+        @keyframes radarRotate {
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+
+        .loader:before {
+            content: '';
+            position: absolute;
+            height: 0;
+            width: 0;
+            top: 0;
+            left: calc(50% - 8px);
+            border: 8px solid transparent;
+            border-top: 120px solid #81ecec;
+            filter: drop-shadow(0 0 12px #01b6be);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-gray-300">
+    <div class="flex h-screen">
+
+        <div id="widget" class="w-64 bg-gray-800 p-4 overflow-y-auto">
+            <div class="mb-8">
+                <h2 class="text-lg text-gray-400 flex justify-between items-center mb-4">
+                    Shortcuts
+                    <button class="text-gray-400 hover:text-gray-200" id="addShortcutBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </h2>
+                <ul class="space-y-4" id="shortcutsList">
+                    <!-- Shortcuts will be dynamically added here -->
+                </ul>
+            </div>
+        </div>
+        <div id="bg-main" class="flex-1 p-6 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <div class="relative w-full max-w-md">
+                    <div id="widget" class="flex items-center bg-gray-800 p-4 rounded-full">
+                        <i id="searchIcon" class="fas fa-search text-gray-400"></i>
+                        <input class="bg-transparent border-none text-gray-300 ml-3 w-full focus:outline-none"
+                            id="searchInput" placeholder="Search..." type="text" />
+                    </div>
+                    <div id="widget searchMenu"
+                        class="searchMenu absolute top-full left-0 w-full bg-gray-800 border border-gray-700 rounded-md mt-2 hidden">
+                        <button class="flex items-center w-full p-4 text-left text-gray-300 hover:bg-gray-700"
+                            data-engine="google">
+                            <i class="fab fa-google mr-3"></i>
+                            Google
+                        </button>
+                        <button class="flex items-center w-full p-4 text-left text-gray-300 hover:bg-gray-700"
+                            data-engine="bing">
+                            <i class="fab fa-microsoft mr-3"></i>
+                            Bing
+                        </button>
+                        <button class="flex items-center w-full p-4 text-left text-gray-300 hover:bg-gray-700"
+                            data-engine="yahoo">
+                            <i class="fab fa-yahoo mr-3"></i>
+                            Yahoo
+                        </button>
+                        <button class="flex items-center w-full p-4 text-left text-gray-300 hover:bg-gray-700"
+                            data-engine="duckduckgo">
+                            <i class="fas fa-feather-alt mr-3"></i>
+                            DuckDuckGo
+                        </button>
+                        <button class="flex items-center w-full p-4 text-left text-gray-300 hover:bg-gray-700"
+                            data-engine="yandex">
+                            <i class="fab fa-yandex mr-3"></i>
+                            Yandex
+                        </button>
+                        <button class="flex items-center w-full p-4 text-left text-gray-300 hover:bg-gray-700"
+                            data-engine="ask">
+                            <i class="fas fa-question mr-3"></i>
+                            Ask
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div id="widget" class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col text-center "
+                    id="profileWidget">
+                    <a href="https://weroperking.github.io/personal">
+                        <img id="logoURL" alt="Profile Image" class="w-full rounded-lg pointer-events-none "
+                            height="300" src="./imgs/logo.png" width="300" />
+                    </a>
+                    <h3 class="text-lg mt-4">Profile</h3>
+                </div>
+                <div id="widget" class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                    <h3 class="text-lg">Clock</h3>
+                    <div id="widget"
+                        class="bg-gray-800 p-6 rounded-lg shadow-lg w-full text-center flex flex-col justify-center items-center h-full">
+                        <div class="text-5xl text-blue-500 mb-4">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="text-4xl font-bold" id="time">12:00:00</div>
+                        <div class="text-2xl text-gray-400" id="date">January 1, 2024</div>
+                    </div>
+                </div>
+                <div id="widget" class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center text-center"
+                    id="internetSpeedTestCard">
+                    <h3 class="text-lg">Internet Speed Test</h3>
+                    <div id="widget"
+                        class="bg-gray-800 p-6 rounded-lg shadow-lg w-full text-center flex flex-col justify-center items-center h-full">
+                        <div class="loader-widget">
+                            <h1 class="text-xl text-blue-500 mb-4">CHECK INTERNET SPEED</h1>
+                            <span class="loader hide"></span>
+                            <div class="loader-content">
+                                <div class="content hide text-4xl">
+                                    24
+                                    <small class="text-lg">Mbps</small>
+                                </div>
+                                <button class="bg-blue-500 text-white p-4 rounded-full mt-4 relative"
+                                    id="checkSpeedButton">CHECK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="widget" class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                    <h3 class="text-lg">Weather Information</h3>
+                    <div class="flex flex-col items-center">
+                        <img id="WeatherIcon" alt="Weather icon" class="mb-4 pointer-events-none" height="100"
+                            width="100" id="weatherIcon" src="./imgs/sunny_cloudy.png" />
+                        <div class="text-4xl font-bold" id="temperature">--°C</div>
+                        <div class="text-xl text-gray-400" id="weatherDescription">Loading...</div>
+                    </div>
+                </div>
+                <div id="widget" class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                    <h3 class="text-lg">To-Do List</h3>
+                    <ul class="w-full text-left space-y-2" id="todoList">
+                        <!-- To-Do items will be dynamically added here -->
+                    </ul>
+                    <input class="mt-4 p-2 w-full bg-gray-700 text-gray-300 rounded" id="newTaskInput"
+                        placeholder="New task...(press 'Enter' to add)" type="text" />
+                    <button class="bg-blue-500 text-white p-2 rounded mt-2 w-full" id="addTaskButton">Add Task</button>
+                </div>
+                <div id="widget" class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+
+                    <h3 class="text-lg">Notes</h3>
+                    <textarea class="w-full h-32 p-2 bg-gray-700 text-gray-300 rounded" id="notes"
+                        placeholder="Write your notes here... (press 'Shift+Enter' to save )"></textarea>
+                    <button class="bg-blue-500 text-white p-2 rounded mt-2 w-full" id="saveNotesButton">Save
+                        Notes</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <button id="settingsBtn" class="absolute top-4 right-4 text-gray-400 text-lg hover:text-gray-200">
+        <i class="fas fa-cog"></i>
+    </button>
+    <script src="./Home.js"></script>
+
+
+
+</body>
+
+</html>

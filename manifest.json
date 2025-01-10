@@ -1,0 +1,40 @@
+{
+    "manifest_version": 3,
+    "name": "Custom Home Page  ",
+    "version": "1.0",
+    "description": "Replaces the old 'new tab' with a custom one that display Weather Conditions and InternetSpeedTest Clock To-Do-list and note ,(^_^)enjoy(^_^).",
+    "icons": {
+        "16": "/imgs/icon16.png",
+        "48": "/imgs/icon48.png",
+        "128": "/imgs/icon128.png"
+    },
+    "chrome_url_overrides": {
+        "newtab": "Home.html"
+    },
+    "permissions": [
+        "geolocation"
+    ],
+    "host_permissions": [
+        "https://api.open-meteo.com/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "Home.js"
+            ]
+        }
+    ],
+
+    "author": "Mohamed Khalid | weroperking",
+    "action": {
+        "default_icon": {
+            "16": "/imgs/icon16.png",
+            "48": "/imgs/icon48.png",
+            "128": "/imgs/icon128.png"
+        },
+        "default_title": "Custom New Tab"
+    }
+}
